@@ -1,4 +1,5 @@
 let express = require('express');
+let fortune = require('./lib/fortune.js');
 let app = express();
 let handlebars = require('express-handlebars');
 handlebars.create({defaultLayout: 'main'});
@@ -13,8 +14,7 @@ app.get('/', function(req, res){
   res.render('home');
 });
 app.get('/about', function(req, res){
-  let randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-  res.render('about', {fortune: randomFortune});
+  res.render('about', {fortune: fortune.getFortune()});
 });
 
 
@@ -30,9 +30,3 @@ app.use(function(err, req, res, next){
 app.listen(app.get('port'), function(){
   console.log('Express is working');
 })
-
-let fortunes = [
-  "You will get a surprise",
-  "Something exciting is waiting for you",
-  "Hi",
-]
